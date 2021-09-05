@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
     ViewGroup?, savedInstanceState: Bundle?): View {
         binding = MainFragmentBinding.inflate(inflater, container,
             false)
-
+        binding.listsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
 
