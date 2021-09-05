@@ -1,27 +1,77 @@
 package com.raywenderlich.listmaker.ui.detail
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
+import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import com.raywenderlich.listmaker.MainActivity
 import com.raywenderlich.listmaker.R
-import com.raywenderlich.listmaker.TaskList
+import com.raywenderlich.listmaker.databinding.ListDetailActivityBinding
 import com.raywenderlich.listmaker.ui.detail.ui.detail.ListDetailFragment
+import com.raywenderlich.listmaker.ui.detail.ui.detail.ListDetailViewModel
 
 class ListDetailActivity : AppCompatActivity() {
 
-    lateinit var list: TaskList
+    lateinit var viewModel: ListDetailViewModel
+    lateinit var fragment: ListDetailFragment
+    lateinit var binding: ListDetailActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_detail_activity)
+        binding = ListDetailActivityBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        binding.addTaskButton.setOnClickListener {
+            showCreateTaskDialog()
+        }
+
+        viewModel =
+            ViewModelProvider(this).get(ListDetailViewModel::class.java)
+
         //referencing list in the Intent & assigning it to list variable
         list =
             intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)!!
         //assigning title of activity to name of list
-        title = list.name
+        title = viewModel.list.name
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ListDetailFragment.newInstance())
+                .replace(R.id.detail_container, ListDetailFragment.newInstance())
                 .commitNow()
         }
     }
+
+    private fun showCreateTaskDialog() {
+        //creating EditText to receive text from User
+        val taskEditText = EditText(this)
+        taskEditText.inputType = InputType.TYPE_CLASS_TEXT
+        //setting up alert dialog
+        AlertDialog.Builder(this)
+            .setTitle(R.string.task_to_add)
+            .setView(taskEditText)
+            .setPositiveButton(R.string.add_task) { dialog, _ ->
+                //accessing EditText to create task from text input
+                val task = taskEditText.text.toString()
+                //notifying ViewModel that new item was added
+                viewModel.addTask(task)
+                //closing dialog
+                dialog.dismiss()
+            }
+            //creating & showing alert dialog
+            .create()
+            .show()
+    }
+
+    override fun onBackPressed() {
+        val bundle = Bundle()
+        bundle.putParcelable(MainActivity.INTENT_LIST_KEY,
+            viewModel.list)
+        val intent = Intent()
+        intent.putExtras(bundle)
+        setResult(Activity.RESULT_OK, intent)
+        super.onBackPressed()
+    }
+
 }
