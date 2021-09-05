@@ -7,9 +7,12 @@ import com.raywenderlich.listmaker.TaskList
 import com.raywenderlich.listmaker.databinding.ListSelectionViewHolderBinding
 
 //inheriting from recycler view
-class ListSelectionRecyclerViewAdapter(private val lists :
-                                       MutableList<TaskList>) :
+class ListSelectionRecyclerViewAdapter(val lists: MutableList<TaskList>,
+                                       val clickListener: ListSelectionRecyclerViewClickListener) :
     RecyclerView.Adapter<ListSelectionViewHolder>() {
+    interface ListSelectionRecyclerViewClickListener {
+        fun listItemClicked(list: TaskList)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListSelectionViewHolder {
 
         val binding =
@@ -27,6 +30,9 @@ class ListSelectionRecyclerViewAdapter(private val lists :
                                   position: Int) {
         holder.binding.itemNumber.text = (position + 1).toString()
         holder.binding.itemString.text = lists[position].name
+        holder.itemView.setOnClickListener {
+            clickListener.listItemClicked(lists[position])
+        }
     }
 
     //getting size of lists
