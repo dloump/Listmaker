@@ -17,10 +17,10 @@ class ListSelectionRecyclerViewAdapter(private val lists :
                 LayoutInflater.from(parent.context), parent, false)
 
         return ListSelectionViewHolder(binding)
+    }
 
-        fun listsUpdated() {
-            notifyItemInserted(lists.size-1)
-        }
+    fun listsUpdated() {
+        notifyItemInserted(lists.size-1)
     }
 
     override fun onBindViewHolder(holder: ListSelectionViewHolder,
