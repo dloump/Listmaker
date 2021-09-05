@@ -1,22 +1,36 @@
 package com.raywenderlich.listmaker.ui.main
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
-val listTitles = arrayOf("Shopping List", "Chores", "Android Tutorials")
+import com.raywenderlich.listmaker.TaskList
+import com.raywenderlich.listmaker.databinding.ListSelectionViewHolderBinding
 
 //inheriting from recycler view
-class ListSelectionRecyclerViewAdapter :
+class ListSelectionRecyclerViewAdapter(private val lists :
+                                       MutableList<TaskList>) :
     RecyclerView.Adapter<ListSelectionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListSelectionViewHolder {
-        TODO("Not yet implemented")
+
+        val binding =
+            ListSelectionViewHolderBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false)
+
+        return ListSelectionViewHolder(binding)
+
+        fun listsUpdated() {
+            notifyItemInserted(lists.size-1)
+        }
     }
 
-    override fun onBindViewHolder(holder: ListSelectionViewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(holder: ListSelectionViewHolder,
+                                  position: Int) {
+        holder.binding.itemNumber.text = (position + 1).toString()
+        holder.binding.itemString.text = lists[position].name
     }
 
+    //getting size of lists
     override fun getItemCount(): Int {
-        return listTitles.size
+        return lists.size
     }
 }
