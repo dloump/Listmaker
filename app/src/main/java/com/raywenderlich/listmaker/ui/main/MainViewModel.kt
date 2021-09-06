@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import com.raywenderlich.listmaker.TaskList
 
-
 class MainViewModel(private val sharedPreferences:
                     SharedPreferences
 ) : ViewModel() {
@@ -43,6 +42,14 @@ class MainViewModel(private val sharedPreferences:
     fun refreshLists() {
         lists.clear()
         lists.addAll(retrieveLists())
+    }
+
+    lateinit var list: TaskList
+    lateinit var onTaskAdded: (() -> Unit)
+
+    fun addTask(task: String) {
+        list.tasks.add(task)
+        onTaskAdded.invoke()
     }
 
 }

@@ -16,13 +16,13 @@ interface MainFragmentInteractionListener {
     fun listItemTapped(list: TaskList)
 }
 
-class MainFragment(val clickListener:
-                   MainFragmentInteractionListener) : Fragment(),
+class MainFragment : Fragment(),
     ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
 
+    lateinit var clickListener: MainFragmentInteractionListener
+
     companion object {
-        fun newInstance(clickListener: MainActivity)
-                = MainFragment(clickListener)
+        fun newInstance() = MainFragment()
     }
 
     private lateinit var binding: MainFragmentBinding
