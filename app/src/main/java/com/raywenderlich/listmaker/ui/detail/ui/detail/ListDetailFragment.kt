@@ -20,14 +20,13 @@ import com.raywenderlich.listmaker.ui.main.MainViewModelFactory
 
 lateinit var binding: ListDetailFragmentBinding
 
-class ListItemsRecyclerViewAdapter(var list: TaskList) :
-    RecyclerView.Adapter<ListItemViewHolder>() {
+class ListDetailFragment : Fragment() {
 
     companion object {
         fun newInstance() = ListDetailFragment()
     }
 
-    private lateinit var viewModel: ListDetailViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container:
     ViewGroup?, savedInstanceState: Bundle?): View {
@@ -42,10 +41,10 @@ class ListItemsRecyclerViewAdapter(var list: TaskList) :
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(
             requireActivity(),
-            MainViewModelFactory(
-                PreferenceManager.getDefaultSharedPreferences(requireActivity()))
+            MainViewModelFactory(PreferenceManager.getDefaultSharedPreferences(requireActivity()))
         )
             .get(MainViewModel::class.java)
+
         val recyclerAdapter =
             ListItemsRecyclerViewAdapter(viewModel.list)
         binding.listItemsRecyclerview.adapter = recyclerAdapter

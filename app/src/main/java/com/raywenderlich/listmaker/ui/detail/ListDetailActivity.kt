@@ -39,7 +39,7 @@ class ListDetailActivity : AppCompatActivity() {
         ).get(MainViewModel::class.java)
 
         //referencing list in the Intent & assigning it to list variable
-        list =
+        viewModel.list =
             intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)!!
         //assigning title of activity to name of list
         title = viewModel.list.name
