@@ -13,8 +13,9 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.raywenderlich.listmaker.databinding.MainActivityBinding
-import com.raywenderlich.listmaker.models.TaskList
+import com.raywenderlich.listmaker.TaskList
 import com.raywenderlich.listmaker.ui.detail.ListDetailActivity
+import com.raywenderlich.listmaker.ui.detail.ui.detail.ListDetailFragment
 import com.raywenderlich.listmaker.ui.main.MainFragment
 import com.raywenderlich.listmaker.ui.main.MainViewModel
 import com.raywenderlich.listmaker.ui.main.MainViewModelFactory
@@ -169,6 +170,10 @@ class MainActivity : AppCompatActivity(),
                 showCreateListDialog()
             }
         }
+    }
+
+    override fun listItemTapped(list: TaskList) {
+        showListDetail(list)
     }
 
 }

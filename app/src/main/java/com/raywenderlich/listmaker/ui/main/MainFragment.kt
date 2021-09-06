@@ -12,12 +12,12 @@ import com.raywenderlich.listmaker.MainActivity
 import com.raywenderlich.listmaker.TaskList
 import com.raywenderlich.listmaker.databinding.MainFragmentBinding
 
-interface MainFragmentInteractionListener {
-    fun listItemTapped(list: TaskList)
-}
 
 class MainFragment : Fragment(),
     ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
+    interface MainFragmentInteractionListener {
+        fun listItemTapped(list: TaskList)
+    }
 
     lateinit var clickListener: MainFragmentInteractionListener
 

@@ -14,7 +14,6 @@ import com.raywenderlich.listmaker.MainActivity
 import com.raywenderlich.listmaker.R
 import com.raywenderlich.listmaker.TaskList
 import com.raywenderlich.listmaker.databinding.ListDetailFragmentBinding
-import com.raywenderlich.listmaker.ui.detail.R
 import com.raywenderlich.listmaker.ui.main.MainViewModel
 import com.raywenderlich.listmaker.ui.main.MainViewModelFactory
 
